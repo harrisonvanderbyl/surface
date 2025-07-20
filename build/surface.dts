@@ -11176,6 +11176,7 @@
   pinctrl-0 = <&panel_bl_pins>, <&edp_bl_pwm>;
   pinctrl-names = "default";
 
+
  };
 
  gpio-keys {
@@ -11184,6 +11185,13 @@
   pinctrl-0 = <&hall_int_n_default>;
   pinctrl-names = "default";
 
+  switch-lid {
+   gpios = <&tlmm 2 1>;
+   linux,input-type = <0x05>;
+   linux,code = <0x00>;
+   wakeup-source;
+   wakeup-event-action = <0x02>;
+  };
 
  };
 
@@ -11220,9 +11228,8 @@
   pinctrl-0 = <&edp_reg_en>;
   pinctrl-names = "default";
 
-  regulator-always-on;
   regulator-boot-on;
-
+  regulator-always-on;
  };
 
 
@@ -11307,6 +11314,7 @@
   pinctrl-names = "default";
 
   regulator-boot-on;
+  regulator-always-on;
  };
 
 
@@ -11340,7 +11348,7 @@
   model = "X1E80100-Microsoft-Surface-Pro-11";
   audio-routing = "SpkrLeft IN", "WSA WSA_SPK1 OUT",
     "SpkrRight IN", "WSA WSA_SPK2 OUT";
-# 211 "./sp12.dts"
+# 219 "./sp12.dts"
   wsa-dai-link {
    link-name = "WSA Playback";
 
