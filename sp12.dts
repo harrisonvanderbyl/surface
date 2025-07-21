@@ -976,10 +976,6 @@
 	dr_mode = "host";
 };
 
-&iris {
-	status = "okay";
-
-};
 
 &remoteproc_adsp {
 	firmware-name = "qcom/x1p42100/qcadsp8380.mbn",
