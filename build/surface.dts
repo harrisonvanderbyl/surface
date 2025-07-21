@@ -33,49 +33,52 @@
 
 
 # 1 "./include/x1e80100.dtsi" 1
+
+
+
+
+
 # 1 "./include/dt-bindings/clock/qcom,rpmh.h" 1
-# 2 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/clock/qcom,sc8280xp-lpasscc.h" 1
-# 3 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/clock/qcom,sm8450-videocc.h" 1
-# 4 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/clock/qcom,x1e80100-dispcc.h" 1
-# 5 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/clock/qcom,x1e80100-camcc.h" 1
-# 6 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/clock/qcom,x1e80100-gcc.h" 1
 # 7 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/clock/qcom,x1e80100-gpucc.h" 1
+# 1 "./include/dt-bindings/clock/qcom,sc8280xp-lpasscc.h" 1
 # 8 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/clock/qcom,x1e80100-tcsr.h" 1
+# 1 "./include/dt-bindings/clock/qcom,sm8450-videocc.h" 1
 # 9 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/dma/qcom-gpi.h" 1
+# 1 "./include/dt-bindings/clock/qcom,x1e80100-dispcc.h" 1
 # 10 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/interconnect/qcom,icc.h" 1
+# 1 "./include/dt-bindings/clock/qcom,x1e80100-gcc.h" 1
 # 11 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/interconnect/qcom,x1e80100-rpmh.h" 1
+# 1 "./include/dt-bindings/clock/qcom,x1e80100-gpucc.h" 1
 # 12 "./include/x1e80100.dtsi" 2
+# 1 "./include/dt-bindings/clock/qcom,x1e80100-tcsr.h" 1
+# 13 "./include/x1e80100.dtsi" 2
+# 1 "./include/dt-bindings/dma/qcom-gpi.h" 1
+# 14 "./include/x1e80100.dtsi" 2
+# 1 "./include/dt-bindings/interconnect/qcom,icc.h" 1
+# 15 "./include/x1e80100.dtsi" 2
+# 1 "./include/dt-bindings/interconnect/qcom,x1e80100-rpmh.h" 1
+# 16 "./include/x1e80100.dtsi" 2
 # 1 "./include/dt-bindings/interrupt-controller/arm-gic.h" 1
 # 9 "./include/dt-bindings/interrupt-controller/arm-gic.h"
 # 1 "./include/dt-bindings/interrupt-controller/irq.h" 1
 # 10 "./include/dt-bindings/interrupt-controller/arm-gic.h" 2
-# 13 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/mailbox/qcom-ipcc.h" 1
-# 14 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/phy/phy-qcom-qmp.h" 1
-# 15 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/power/qcom,rpmhpd.h" 1
-# 16 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/power/qcom-rpmpd.h" 1
 # 17 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/soc/qcom,gpr.h" 1
+# 1 "./include/dt-bindings/mailbox/qcom-ipcc.h" 1
 # 18 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/soc/qcom,rpmh-rsc.h" 1
+# 1 "./include/dt-bindings/phy/phy-qcom-qmp.h" 1
 # 19 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h" 1
+# 1 "./include/dt-bindings/power/qcom,rpmhpd.h" 1
 # 20 "./include/x1e80100.dtsi" 2
-# 1 "./include/dt-bindings/thermal/thermal.h" 1
+# 1 "./include/dt-bindings/power/qcom-rpmpd.h" 1
 # 21 "./include/x1e80100.dtsi" 2
+# 1 "./include/dt-bindings/soc/qcom,gpr.h" 1
+# 22 "./include/x1e80100.dtsi" 2
+# 1 "./include/dt-bindings/soc/qcom,rpmh-rsc.h" 1
+# 23 "./include/x1e80100.dtsi" 2
+# 1 "./include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h" 1
+# 24 "./include/x1e80100.dtsi" 2
+# 1 "./include/dt-bindings/thermal/thermal.h" 1
+# 25 "./include/x1e80100.dtsi" 2
 
 / {
  interrupt-parent = <&intc>;
@@ -2911,7 +2914,6 @@
    #clock-cells = <1>;
    #phy-cells = <1>;
 
-   mode-switch;
    orientation-switch;
 
    status = "disabled";
@@ -2982,7 +2984,6 @@
    #clock-cells = <1>;
    #phy-cells = <1>;
 
-   mode-switch;
    orientation-switch;
 
    status = "disabled";
@@ -3053,7 +3054,6 @@
    #clock-cells = <1>;
    #phy-cells = <1>;
 
-   mode-switch;
    orientation-switch;
 
    status = "disabled";
@@ -3915,7 +3915,6 @@
 
    gpu_opp_table: opp-table {
     compatible = "operating-points-v2-adreno", "operating-points-v2";
-
     opp-1500000000 {
      opp-hz = /bits/ 64 <1500000000>;
      opp-level = <456>;
@@ -5341,257 +5340,6 @@
    };
   };
 
-  cci0: cci@ac15000 {
-   compatible = "qcom,x1e80100-cci", "qcom,msm8996-cci";
-   reg = <0x0 0x0ac15000 0x0 0x1000>;
-   interrupts = <0 460 1>;
-   clocks = <&camcc 5>,
-     <&camcc 14>,
-     <&camcc 9>;
-   clock-names = "camnoc_axi",
-          "cpas_ahb",
-          "cci";
-   power-domains = <&camcc 5>;
-   pinctrl-0 = <&cci0_default>;
-   pinctrl-1 = <&cci0_sleep>;
-   pinctrl-names = "default", "sleep";
-   #address-cells = <1>;
-   #size-cells = <0>;
-   status = "disabled";
-   cci0_i2c0: i2c-bus@0 {
-    reg = <0>;
-    clock-frequency = <1000000>;
-    #address-cells = <1>;
-    #size-cells = <0>;
-   };
-   cci0_i2c1: i2c-bus@1 {
-    reg = <1>;
-    clock-frequency = <1000000>;
-    #address-cells = <1>;
-    #size-cells = <0>;
-   };
-  };
-
-  cci1: cci@ac16000 {
-   compatible = "qcom,x1e80100-cci", "qcom,msm8996-cci";
-   reg = <0x0 0x0ac16000 0x0 0x1000>;
-   interrupts = <0 271 1>;
-   clocks = <&camcc 5>,
-     <&camcc 14>,
-     <&camcc 11>;
-   clock-names = "camnoc_axi",
-          "cpas_ahb",
-          "cci";
-   power-domains = <&camcc 5>;
-   pinctrl-0 = <&cci1_default>;
-   pinctrl-1 = <&cci1_sleep>;
-   pinctrl-names = "default", "sleep";
-   #address-cells = <1>;
-   #size-cells = <0>;
-   status = "disabled";
-   cci1_i2c0: i2c-bus@0 {
-    reg = <0>;
-    clock-frequency = <1000000>;
-    #address-cells = <1>;
-    #size-cells = <0>;
-   };
-   cci1_i2c1: i2c-bus@1 {
-    reg = <1>;
-    clock-frequency = <1000000>;
-    #address-cells = <1>;
-    #size-cells = <0>;
-   };
-  };
-
-  camss: isp@acb6000 {
-   compatible = "qcom,x1e80100-camss";
-   reg = <0x0 0x0acb7000 0x0 0x2000>,
-         <0x0 0x0acb9000 0x0 0x2000>,
-         <0x0 0x0acbb000 0x0 0x2000>,
-         <0x0 0x0acc6000 0x0 0x1000>,
-         <0x0 0x0acca000 0x0 0x1000>,
-         <0x0 0x0acb6000 0x0 0x1000>,
-         <0x0 0x0ace4000 0x0 0x2000>,
-         <0x0 0x0ace6000 0x0 0x2000>,
-         <0x0 0x0ace8000 0x0 0x2000>,
-         <0x0 0x0acec000 0x0 0x2000>,
-         <0x0 0x0acf6000 0x0 0x1000>,
-         <0x0 0x0acf7000 0x0 0x1000>,
-         <0x0 0x0acf8000 0x0 0x1000>,
-         <0x0 0x0ac62000 0x0 0x4000>,
-         <0x0 0x0ac71000 0x0 0x4000>,
-         <0x0 0x0acc7000 0x0 0x2000>,
-         <0x0 0x0accb000 0x0 0x2000>;
-   reg-names = "csid0",
-        "csid1",
-        "csid2",
-        "csid_lite0",
-        "csid_lite1",
-        "csid_wrapper",
-        "csiphy0",
-        "csiphy1",
-        "csiphy2",
-        "csiphy4",
-        "csitpg0",
-        "csitpg1",
-        "csitpg2",
-        "vfe0",
-        "vfe1",
-        "vfe_lite0",
-        "vfe_lite1";
-   clocks = <&camcc 4>,
-     <&camcc 5>,
-     <&camcc 13>,
-     <&camcc 14>,
-     <&camcc 16>,
-     <&camcc 17>,
-     <&camcc 18>,
-     <&camcc 19>,
-     <&camcc 22>,
-     <&camcc 35>,
-     <&camcc 37>,
-     <&camcc 38>,
-     <&camcc 23>,
-     <&camcc 39>,
-     <&camcc 25>,
-     <&camcc 40>,
-     <&camcc 27>,
-     <&camcc 42>,
-     <&camcc 31>,
-     <&gcc 17>,
-     <&gcc 18>,
-     <&camcc 49>,
-     <&camcc 52>,
-     <&camcc 53>,
-     <&camcc 56>,
-     <&camcc 58>,
-     <&camcc 57>,
-     <&camcc 60>,
-     <&camcc 61>;
-   clock-names = "camnoc_nrt_axi",
-          "camnoc_rt_axi",
-          "core_ahb",
-          "cpas_ahb",
-          "cpas_fast_ahb",
-          "cpas_vfe0",
-          "cpas_vfe1",
-          "cpas_vfe_lite",
-          "cphy_rx_clk_src",
-          "csid",
-          "csid_csiphy_rx",
-          "csiphy0",
-          "csiphy0_timer",
-          "csiphy1",
-          "csiphy1_timer",
-          "csiphy2",
-          "csiphy2_timer",
-          "csiphy4",
-          "csiphy4_timer",
-          "gcc_axi_hf",
-          "gcc_axi_sf",
-          "vfe0",
-          "vfe0_fast_ahb",
-          "vfe1",
-          "vfe1_fast_ahb",
-          "vfe_lite",
-          "vfe_lite_ahb",
-          "vfe_lite_cphy_rx",
-          "vfe_lite_csid";
-   interrupts = <0 464 1>,
-         <0 466 1>,
-         <0 431 1>,
-         <0 468 1>,
-         <0 359 1>,
-         <0 477 1>,
-         <0 478 1>,
-         <0 479 1>,
-         <0 122 1>,
-         <0 465 1>,
-         <0 467 1>,
-         <0 469 1>,
-         <0 360 1>;
-   interrupt-names = "csid0",
-       "csid1",
-       "csid2",
-       "csid_lite0",
-       "csid_lite1",
-       "csiphy0",
-       "csiphy1",
-       "csiphy2",
-       "csiphy4",
-       "vfe0",
-       "vfe1",
-       "vfe_lite0",
-       "vfe_lite1";
-   interconnects = <&gem_noc 3 ((1 << 0) | (1 << 1))
-      &config_noc 5 ((1 << 0) | (1 << 1))>,
-     <&mmss_noc 1 ((1 << 0) | (1 << 1) | (1 << 2))
-      &mc_virt 1 ((1 << 0) | (1 << 1) | (1 << 2))>,
-     <&mmss_noc 3 ((1 << 0) | (1 << 1) | (1 << 2))
-      &mc_virt 1 ((1 << 0) | (1 << 1) | (1 << 2))>,
-     <&mmss_noc 2 ((1 << 0) | (1 << 1) | (1 << 2))
-      &mc_virt 1 ((1 << 0) | (1 << 1) | (1 << 2))>;
-   interconnect-names = "ahb",
-          "hf_mnoc",
-          "sf_mnoc",
-          "sf_icp_mnoc";
-   iommus = <&apps_smmu 0x800 0x60>,
-     <&apps_smmu 0x860 0x60>,
-     <&apps_smmu 0x1800 0x60>,
-     <&apps_smmu 0x1860 0x60>,
-     <&apps_smmu 0x18e0 0x00>,
-     <&apps_smmu 0x1900 0x00>,
-     <&apps_smmu 0x1980 0x20>,
-     <&apps_smmu 0x19a0 0x20>;
-   power-domains = <&camcc 1>,
-     <&camcc 2>,
-     <&camcc 5>;
-   power-domain-names = "ife0",
-          "ife1",
-          "top";
-   status = "disabled";
-   ports {
-    #address-cells = <1>;
-    #size-cells = <0>;
-    port@0 {
-     reg = <0>;
-     #address-cells = <1>;
-     #size-cells = <0>;
-    };
-    port@1 {
-     reg = <1>;
-     #address-cells = <1>;
-     #size-cells = <0>;
-    };
-    port@2 {
-     reg = <2>;
-     #address-cells = <1>;
-     #size-cells = <0>;
-    };
-    port@3 {
-     reg = <3>;
-     #address-cells = <1>;
-     #size-cells = <0>;
-    };
-   };
-  };
-
-  camcc: clock-controller@ade0000 {
-   compatible = "qcom,x1e80100-camcc";
-   reg = <0x0 0x0ade0000 0x0 0x20000>;
-   clocks = <&gcc 16>,
-     <&bi_tcxo_div2>,
-     <&bi_tcxo_ao_div2>,
-     <&sleep_clk>;
-   power-domains = <&rpmhpd 10>,
-     <&rpmhpd 6>;
-   required-opps = <&rpmhpd_opp_low_svs>,
-     <&rpmhpd_opp_low_svs>;
-   #clock-cells = <1>;
-   #reset-cells = <1>;
-   #power-domain-cells = <1>;
-  };
-
   mdss: display-subsystem@ae00000 {
    compatible = "qcom,x1e80100-mdss";
    reg = <0 0x0ae00000 0 0x1000>;
@@ -6112,6 +5860,8 @@
    #clock-cells = <1>;
    #reset-cells = <1>;
    #power-domain-cells = <1>;
+
+
   };
 
   pdc: interrupt-controller@b220000 {
@@ -6199,74 +5949,6 @@
 
    gpio-ranges = <&tlmm 0 0 239>;
    wakeup-parent = <&pdc>;
-
-   cci0_default: cci0-default-state {
-    cci0_i2c0_default: cci0-i2c0-default-pins {
-
-     pins = "gpio101", "gpio102";
-     function = "cci_i2c";
-     drive-strength = <2>;
-     bias-pull-up;
-    };
-    cci0_i2c1_default: cci0-i2c1-default-pins {
-
-     pins = "gpio103", "gpio104";
-     function = "cci_i2c";
-     drive-strength = <2>;
-     bias-pull-up;
-    };
-   };
-
-   cci0_sleep: cci0-sleep-state {
-    cci0_i2c0_sleep: cci0-i2c0-sleep-pins {
-
-     pins = "gpio101", "gpio102";
-     function = "cci_i2c";
-     drive-strength = <2>;
-     bias-pull-down;
-    };
-    cci0_i2c1_sleep: cci0-i2c1-sleep-pins {
-
-     pins = "gpio103", "gpio104";
-     function = "cci_i2c";
-     drive-strength = <2>;
-     bias-pull-down;
-    };
-   };
-
-   cci1_default: cci1-default-state {
-    cci1_i2c0_default: cci1-i2c0-default-pins {
-
-     pins = "gpio105","gpio106";
-     function = "cci_i2c";
-     drive-strength = <2>;
-     bias-pull-up;
-    };
-    cci1_i2c1_default: cci1-i2c1-default-pins {
-
-     pins = "gpio235","gpio236";
-     function = "aon_cci";
-     drive-strength = <2>;
-     bias-pull-up;
-    };
-   };
-
-   cci1_sleep: cci1-sleep-state {
-    cci1_i2c0_sleep: cci1-i2c0-sleep-pins {
-
-     pins = "gpio105","gpio106";
-     function = "cci_i2c";
-     drive-strength = <2>;
-     bias-pull-down;
-    };
-    cci1_i2c1_sleep: cci1-i2c1-sleep-pins {
-
-     pins = "gpio235","gpio236";
-     function = "aon_cci";
-     drive-strength = <2>;
-     bias-pull-down;
-    };
-   };
 
    qup_i2c0_data_clk: qup-i2c0-data-clk-state {
 
@@ -11082,8 +10764,8 @@
   reg = <0xc 0>;
   #address-cells = <1>;
   #size-cells = <0>;
-
   status = "disabled";
+
 
   pm8010_temp_alarm: temp-alarm@2400 {
    compatible = "qcom,spmi-temp-alarm";
@@ -11319,78 +11001,10 @@
 
 
 
-
-
-
-
- vreg_wcn_0p95: regulator-wcn-0p95 {
-  compatible = "regulator-fixed";
-
-  regulator-name = "VREG_WCN_0P95";
-  regulator-min-microvolt = <950000>;
-  regulator-max-microvolt = <950000>;
-
-  vin-supply = <&vreg_wcn_3p3>;
- };
-
- vreg_wcn_1p9: regulator-wcn-1p9 {
-  compatible = "regulator-fixed";
-
-  regulator-name = "VREG_WCN_1P9";
-  regulator-min-microvolt = <1900000>;
-  regulator-max-microvolt = <1900000>;
-
-  vin-supply = <&vreg_wcn_3p3>;
- };
-
- sound {
-  compatible = "qcom,x1e80100-sndcard";
-  model = "X1E80100-Microsoft-Surface-Pro-11";
-  audio-routing = "SpkrLeft IN", "WSA WSA_SPK1 OUT",
-    "SpkrRight IN", "WSA WSA_SPK2 OUT";
-# 219 "./sp12.dts"
-  wsa-dai-link {
-   link-name = "WSA Playback";
-
-   cpu {
-    sound-dai = <&q6apmbedai 105>;
-   };
-
-   codec {
-    sound-dai = <&left_spkr>, <&right_spkr>, <&swr0 0>, <&lpass_wsamacro 0>;
-   };
-
-   platform {
-    sound-dai = <&q6apm>;
-   };
-  };
-
-  va-dai-link {
-   link-name = "VA Capture";
-
-   cpu {
-    sound-dai = <&q6apmbedai 110>;
-   };
-
-   codec {
-    sound-dai = <&lpass_vamacro 0>;
-   };
-
-   platform {
-    sound-dai = <&q6apm>;
-   };
-  };
- };
-
  wcn7850-pmu {
   compatible = "qcom,wcn7850-pmu";
 
-  vdd-supply = <&vreg_wcn_0p95>;
   vddio-supply = <&vreg_l15b_1p8>;
-  vddaon-supply = <&vreg_wcn_0p95>;
-  vdddig-supply = <&vreg_wcn_0p95>;
-  vddrfa1p2-supply = <&vreg_wcn_1p9>;
-  vddrfa1p8-supply = <&vreg_wcn_1p9>;
 
   wlan-enable-gpios = <&tlmm 117 0>;
   bt-enable-gpios = <&tlmm 116 0>;
@@ -11754,19 +11368,13 @@
  };
 };
 
-&mdss {
- status = "okay";
-
-
-};
-
 
 
 
 
 &soc {
  ufs0: ufs@1d84000 {
-  compatible = "qcom,x1p42100-ufs", "qcom,ufs-qcom";
+  compatible = "qcom,x1e80100-ufs", "qcom,ufs-qcom";
   reg = <0 0x1d84000 0 0x100000>;
   interrupts = <0 265 4>;
 
@@ -11797,50 +11405,6 @@
  };
 };
 
-&mdss_dp3 {
- compatible = "qcom,x1e80100-dp";
- /delete-property/ #sound-dai-cells;
-
- status = "okay";
-
-
-
-
- aux-bus {
-  panel: panel {
-   compatible = "boe,ne120drm-n28", "panel-edp";
-
-
-
-   backlight = <&backlight>;
-   power-supply = <&vreg_l2j_1p2>;
-
-
-
-   panel-timing {
-    clock-frequency = <213460000>;
-    hactive = <2196>;
-    vactive = <1464>;
-    hfront-porch = <32>;
-    hback-porch = <80>;
-    hsync-len = <10>;
-    vfront-porch = <8>;
-    vback-porch = <12>;
-    vsync-len = <4>;
-    hsync-active = <0>;
-    vsync-active = <0>;
-    de-active = <1>;
-    pixelclk-active = <0>;
-   };
-
-
-  };
- };
-
-};
-
-
-
 
 &pmk8550_pwm {
  status = "okay";
@@ -11863,40 +11427,8 @@
  };
 };
 
-&mdss_dp3_phy {
- vdda-phy-supply = <&vreg_l3j_0p8>;
- vdda-pll-supply = <&vreg_l2j_1p2>;
 
 
- status = "okay";
-};
-
-&pcie6a {
- perst-gpios = <&tlmm 152 1>;
- wake-gpios = <&tlmm 154 1>;
-
-
- pinctrl-0 = <&pcie6a_default>;
- pinctrl-names = "default";
-
- status = "okay";
-};
-
-&pcie6a_phy {
- vdda-phy-supply = <&vreg_l1d_0p8>;
- vdda-pll-supply = <&vreg_l2j_1p2>;
-
- status = "okay";
-};
-
-
-&lpass_vamacro {
- pinctrl-0 = <&dmic01_default>;
- pinctrl-names = "default";
-
- vdd-micb-supply = <&vreg_l1b_1p8>;
- qcom,dmic-sample-rate = <4800000>;
-};
 
 &pcie5 {
  status = "okay";
@@ -11908,26 +11440,14 @@
  status = "okay";
 };
 
-
 &dispcc {
- power-domains = <&rpmhpd 6>,
-     <&rpmhpd 8>;
- status = "okay";
-};
 
-&spmi {
- interrupt-names = "periph_irq";
- interrupts = <0 481 4>;
+ status = "disabled";
 };
 
 
 &qupv3_0 {
  status = "okay";
- clocks = <&gcc 224>,
-     <&gcc 225>,
-     <&gcc 159>,
-     <&gcc 158>;
- clock-names = "m-ahb", "s-ahb", "core", "core2x";
 };
 
 &qupv3_1 {
@@ -11942,15 +11462,6 @@
  status = "okay";
 
  assigned-clock-rates = <19200000>;
-
- touchscreen@10 {
-        compatible = "hid-over-i2c";
-  reg = <0x10>;
-  hid-name = "Surface Pro 12 Touchscreen";
-  hid-type = "hidraw";
-  hid-quirks = "HID_QUIRK_NOGET";
-        wakeup-source;
-    };
 
 
 
@@ -12075,36 +11586,6 @@
  vdd3-supply = <&vreg_l14b_3p0>;
 };
 
-&swr0 {
- status = "okay";
-
- pinctrl-0 = <&wsa_swr_active>, <&spkr_01_sd_n_active>;
- pinctrl-names = "default";
-
-
- left_spkr: speaker@0,0 {
-  compatible = "sdw20217020400";
-  reg = <0 0>;
-  reset-gpios = <&lpass_tlmm 12 1>;
-  #sound-dai-cells = <0>;
-  sound-name-prefix = "SpkrLeft";
-  vdd-1p8-supply = <&vreg_l15b_1p8>;
-  vdd-io-supply = <&vreg_l12b_1p2>;
-  qcom,port-mapping = <1 2 3 7 10 13>;
- };
-
-
- right_spkr: speaker@0,1 {
-  compatible = "sdw20217020400";
-  reg = <0 1>;
-  reset-gpios = <&lpass_tlmm 12 1>;
-  #sound-dai-cells = <0>;
-  sound-name-prefix = "SpkrRight";
-  vdd-1p8-supply = <&vreg_l15b_1p8>;
-  vdd-io-supply = <&vreg_l12b_1p2>;
-  qcom,port-mapping = <4 5 6 7 11 13>;
- };
-};
 
 &tlmm {
  gpio-reserved-ranges = <44 4>,
@@ -12217,12 +11698,6 @@
   bias-disable;
  };
 
- cam_indicator_en: cam-indicator-en-state {
-  pins = "gpio225";
-  function = "gpio";
-  drive-strength = <2>;
-  bias-disable;
- };
 
  wcn_sw_en: wcn-sw-en-state {
    pins = "gpio214";
@@ -12341,13 +11816,4 @@
    "qcom/x1p42100/cdsp_dtbs.elf";
 
  status = "okay";
-};
-
-&gpu {
- status = "okay";
-
- zap-shader {
-  memory-region = <&gpu_microcode_mem>;
-  firmware-name = "qcom/x1p42100/qcdxkmsucpurwa.mbn";
- };
 };

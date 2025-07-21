@@ -176,88 +176,12 @@
 		regulator-always-on;
 	};
 
-	/*
-	* TODO: These two regulators are actually part of the removable M.2
-	* card and not the CRD mainboard. Need to describe this differently.
-	* Functionally it works correctly, because all we need to do is to
-	* turn on the actual 3.3V supply above.
-	*/
-	vreg_wcn_0p95: regulator-wcn-0p95 {
-		compatible = "regulator-fixed";
 
-		regulator-name = "VREG_WCN_0P95";
-		regulator-min-microvolt = <950000>;
-		regulator-max-microvolt = <950000>;
-
-		vin-supply = <&vreg_wcn_3p3>;
-	};
-
-	vreg_wcn_1p9: regulator-wcn-1p9 {
-		compatible = "regulator-fixed";
-
-		regulator-name = "VREG_WCN_1P9";
-		regulator-min-microvolt = <1900000>;
-		regulator-max-microvolt = <1900000>;
-
-		vin-supply = <&vreg_wcn_3p3>;
-	};
-
-	sound {
-		compatible = "qcom,x1e80100-sndcard";
-		model = "X1E80100-Microsoft-Surface-Pro-11";
-		audio-routing = "SpkrLeft IN", "WSA WSA_SPK1 OUT",
-				"SpkrRight IN", "WSA WSA_SPK2 OUT";
-				//"IN1_HPHL", "HPHL_OUT",
-				//"IN2_HPHR", "HPHR_OUT",
-				//"AMIC2", "MIC BIAS2",
-				// "VA DMIC0", "MIC BIAS1",
-				// "VA DMIC1", "MIC BIAS1",
-				// "VA DMIC0", "VA MIC BIAS1",
-				// "VA DMIC1", "VA MIC BIAS1",
-				// "TX SWR_INPUT1", "ADC2_OUTPUT";
-
-		wsa-dai-link {
-			link-name = "WSA Playback";
-
-			cpu {
-				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
-			};
-
-			codec {
-				sound-dai = <&left_spkr>, <&right_spkr>, <&swr0 0>, <&lpass_wsamacro 0>;
-			};
-
-			platform {
-				sound-dai = <&q6apm>;
-			};
-		};
-
-		va-dai-link {
-			link-name = "VA Capture";
-
-			cpu {
-				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
-			};
-
-			codec {
-				sound-dai = <&lpass_vamacro 0>;
-			};
-
-			platform {
-				sound-dai = <&q6apm>;
-			};
-		};
-	};
 
 	wcn7850-pmu {
 		compatible = "qcom,wcn7850-pmu";
 
-		vdd-supply = <&vreg_wcn_0p95>;
 		vddio-supply = <&vreg_l15b_1p8>;
-		vddaon-supply = <&vreg_wcn_0p95>;
-		vdddig-supply = <&vreg_wcn_0p95>;
-		vddrfa1p2-supply = <&vreg_wcn_1p9>;
-		vddrfa1p8-supply = <&vreg_wcn_1p9>;
 
 		wlan-enable-gpios = <&tlmm 117 GPIO_ACTIVE_HIGH>;
 		bt-enable-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
@@ -621,19 +545,13 @@
 	};
 };
 
-&mdss {
-	status = "okay";
-	
-	
-};
-
 
 
 
 
 &soc {
 	ufs0: ufs@1d84000 {
-		compatible = "qcom,x1p42100-ufs", "qcom,ufs-qcom";
+		compatible = "qcom,x1e80100-ufs", "qcom,ufs-qcom";
 		reg = <0 0x1d84000 0 0x100000>;
 		interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>; /* Placeholder interrupt */
 
@@ -664,50 +582,6 @@
 	};
 };
 
-&mdss_dp3 {
-	compatible = "qcom,x1e80100-dp";
-	/delete-property/ #sound-dai-cells;
-
-	status = "okay";
-
-   
-
-
-	aux-bus {
-		panel: panel {
-			compatible = "boe,ne120drm-n28", "panel-edp";
-
-			// GPIOs based on display.txt
-			
-			backlight = <&backlight>;
-			power-supply = <&vreg_l2j_1p2>;   // J2: 1.256V (corner 7)
-
-			
-			// Panel timing based on display.txt
-			panel-timing {
-				clock-frequency = <213460000>; // Hz
-				hactive = <2196>;
-				vactive = <1464>;
-				hfront-porch = <32>;
-				hback-porch = <80>;
-				hsync-len = <10>;
-				vfront-porch = <8>;
-				vback-porch = <12>;
-				vsync-len = <4>;
-				hsync-active = <0>;
-				vsync-active = <0>;
-				de-active = <1>;
-				pixelclk-active = <0>;
-			};
-
-			
-		};
-	};
-	
-};
-
-
-
 
 &pmk8550_pwm {
 	status = "okay";
@@ -730,40 +604,8 @@
 	};
 };
 
-&mdss_dp3_phy {
-	vdda-phy-supply = <&vreg_l3j_0p8>;
-	vdda-pll-supply = <&vreg_l2j_1p2>;
 
 
-	status = "okay";
-};
-
-&pcie6a {
-	perst-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>;
-	wake-gpios = <&tlmm 154 GPIO_ACTIVE_LOW>;
-
-
-	pinctrl-0 = <&pcie6a_default>;
-	pinctrl-names = "default";
-
-	status = "okay";
-};
-
-&pcie6a_phy {
-	vdda-phy-supply = <&vreg_l1d_0p8>;
-	vdda-pll-supply = <&vreg_l2j_1p2>;
-
-	status = "okay";
-};
-
-
-&lpass_vamacro {
-	pinctrl-0 = <&dmic01_default>;
-	pinctrl-names = "default";
-
-	vdd-micb-supply = <&vreg_l1b_1p8>;
-	qcom,dmic-sample-rate = <4800000>;
-};
 
 &pcie5 {
 	status = "okay";
@@ -775,26 +617,14 @@
 	status = "okay";
 };
 
-
 &dispcc {
-	power-domains = <&rpmhpd RPMHPD_MMCX>,
-					<&rpmhpd RPMHPD_MX>;
-	status = "okay";
-};
-
-&spmi {
-	interrupt-names = "periph_irq";
-	interrupts = <GIC_SPI 481 IRQ_TYPE_LEVEL_HIGH>;
+	
+	status = "disabled";
 };
 
 
 &qupv3_0 {
 	status = "okay";
-	clocks = <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
-					<&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>,
-					<&gcc GCC_QUPV3_WRAP0_CORE_CLK>,
-					<&gcc GCC_QUPV3_WRAP0_CORE_2X_CLK>;
-	clock-names = "m-ahb", "s-ahb", "core", "core2x";
 };
 
 &qupv3_1 {
@@ -809,15 +639,6 @@
 	status = "okay";
 	// speed 19200000
 	assigned-clock-rates = <19200000>;
-
-	touchscreen@10 {
-        compatible = "hid-over-i2c";
-		reg = <0x10>;
-		hid-name = "Surface Pro 12 Touchscreen";
-		hid-type = "hidraw";
-		hid-quirks = "HID_QUIRK_NOGET";
-        wakeup-source;
-    };
 
 
 
@@ -942,36 +763,6 @@
 	vdd3-supply = <&vreg_l14b_3p0>;
 };
 
-&swr0 {
-	status = "okay";
-
-	pinctrl-0 = <&wsa_swr_active>, <&spkr_01_sd_n_active>;
-	pinctrl-names = "default";
-
-	/* WSA8845, Left Speaker */
-	left_spkr: speaker@0,0 {
-		compatible = "sdw20217020400";
-		reg = <0 0>;
-		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
-		#sound-dai-cells = <0>;
-		sound-name-prefix = "SpkrLeft";
-		vdd-1p8-supply = <&vreg_l15b_1p8>;
-		vdd-io-supply = <&vreg_l12b_1p2>;
-		qcom,port-mapping = <1 2 3 7 10 13>;
-	};
-
-	/* WSA8845, Right Speaker */
-	right_spkr: speaker@0,1 {
-		compatible = "sdw20217020400";
-		reg = <0 1>;
-		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
-		#sound-dai-cells = <0>;
-		sound-name-prefix = "SpkrRight";
-		vdd-1p8-supply = <&vreg_l15b_1p8>;
-		vdd-io-supply = <&vreg_l12b_1p2>;
-		qcom,port-mapping = <4 5 6 7 11 13>;
-	};
-};
 
 &tlmm {
 	gpio-reserved-ranges = <44 4>,
@@ -1084,12 +875,6 @@
 		bias-disable;
 	};
 
-	cam_indicator_en: cam-indicator-en-state {
-		pins = "gpio225";
-		function = "gpio";
-		drive-strength = <2>;
-		bias-disable;
-	};
 
 	wcn_sw_en: wcn-sw-en-state {
 			pins = "gpio214";
@@ -1210,11 +995,3 @@
 	status = "okay";
 };
 
-&gpu {
-	status = "okay";
-
-	zap-shader {
-		memory-region = <&gpu_microcode_mem>;
-		firmware-name = "qcom/x1p42100/qcdxkmsucpurwa.mbn";
-	};
-};
