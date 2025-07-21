@@ -550,10 +550,12 @@
 
 
 &soc {
-	ufs0: ufs@1d84000 {
-		compatible = "qcom,x1e80100-ufs", "qcom,ufs-qcom";
-		reg = <0 0x1d84000 0 0x100000>;
-		interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>; /* Placeholder interrupt */
+	
+	ufs@1d84000 {
+            compatible = "qcom,ufshc",
+                         "jedec,ufs-2.0";
+            reg = <0 0x01d84000 0 0x3000>;
+            interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>; 
 
 		clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
 				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
@@ -578,7 +580,7 @@
 		vccq-supply = <&vreg_l2i_1p2>;
 		vccq2-supply = <&vreg_l3e_1p2>;
 
-		status = "okay";
+		status = "okay";	
 	};
 };
 
@@ -976,6 +978,10 @@
 	dr_mode = "host";
 };
 
+&iris {
+	status = "okay";
+
+};
 
 &remoteproc_adsp {
 	firmware-name = "qcom/x1p42100/qcadsp8380.mbn",
@@ -991,3 +997,12 @@
 	status = "okay";
 };
 
+
+&gpu {
+	status = "okay";
+
+	zap-shader {
+		memory-region = <&gpu_microcode_mem>;
+		firmware-name = "qcom/x1p42100/qcdxkmsucpurwa.mbn";
+	};
+};
