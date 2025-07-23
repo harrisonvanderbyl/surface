@@ -10841,7 +10841,7 @@
 
 / {
  model = "Surface Pro 12 inch";
- compatible = "microsoft,arcata", "qcom,x1p42100";
+ compatible = "microsoft,arcata", "qcom,x1p42100", "qcom,x1e80100";
  chassis-type = "tablet";
 
  aliases {
@@ -10853,7 +10853,6 @@
  backlight: backlight {
   compatible = "pwm-backlight";
   pwms = <&pmk8550_pwm 0 5000000>;
-  enable-gpios = <&pmc8380_3_gpios 4 0>;
 
   pinctrl-0 = <&panel_bl_pins>, <&edp_bl_pwm>;
   pinctrl-names = "default";
@@ -11369,41 +11368,12 @@
 };
 
 
-
-
-
-&soc {
- ufs0: ufs@1d84000 {
-  compatible = "qcom,x1e80100-ufs", "qcom,ufs-qcom";
-  reg = <0 0x1d84000 0 0x100000>;
-  interrupts = <0 265 4>;
-
-  clocks = <&gcc 238>,
-     <&gcc 247>,
-     <&gcc 240>,
-     <&gcc 2>,
-     <&gcc 237>,
-     <&gcc 242>,
-     <&gcc 246>,
-     <&gcc 244>,
-     <&gcc 245>,
-     <&tcsr 6>;
-  clock-names = "core_clk", "unipro_core_clk", "ice_core_clk",
-       "aggre_axi_clk", "ahb_clk", "phy_aux_clk",
-       "tx_symbol_0_clk", "rx_symbol_0_clk", "rx_symbol_1_clk",
-       "clkref_en";
-
-
-
-
-  vcc-supply = <&vreg_l3j_0p8>;
-  vcc-max-supply = <&vreg_l17b_2p5>;
-  vccq-supply = <&vreg_l2i_1p2>;
-  vccq2-supply = <&vreg_l3e_1p2>;
-
-  status = "okay";
- };
+&pmc8380_6 {
+ status = "disabled";
 };
+
+
+
 
 
 &pmk8550_pwm {
@@ -11503,57 +11473,9 @@
  status = "okay";
  assigned-clock-rates = <19200000>;
 
- max34417@1a {
-  compatible = "maxim,max34417";
-  reg = <0x1a>;
-  label = "pa01";
-  status = "okay";
- };
 
- max34417@16 {
-  compatible = "maxim,max34417";
-  reg = <0x16>;
-  label = "pa02";
-  status = "okay";
- };
-
- max34417@18 {
-  compatible = "maxim,max34417";
-  reg = <0x18>;
-  label = "pa03";
-  status = "okay";
- };
-
- max34417@14 {
-  compatible = "maxim,max34417";
-  reg = <0x14>;
-  label = "pa04";
-  status = "okay";
- };
-
- max34417@12 {
-  compatible = "maxim,max34417";
-  reg = <0x12>;
-  label = "pa05";
-  status = "okay";
- };
 };
 
-
-
-
-
-
-&i2c8 {
- status = "okay";
- assigned-clock-rates = <19200000>;
-};
-
-&i2c9 {
-
- status = "okay";
- assigned-clock-rates = <19200000>;
-};
 
 &qupv3_0 {
  status = "okay";
@@ -11816,4 +11738,14 @@
    "qcom/x1p42100/cdsp_dtbs.elf";
 
  status = "okay";
+};
+
+
+&gpu {
+ status = "okay";
+
+ zap-shader {
+  memory-region = <&gpu_microcode_mem>;
+  firmware-name = "qcom/x1p42100/qcdxkmsucpurwa.mbn";
+ };
 };
