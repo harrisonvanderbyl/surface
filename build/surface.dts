@@ -11727,16 +11727,10 @@
 };
 
 &remoteproc_adsp {
- firmware-name = "qcom/x1p42100/qcadsp8380.mbn",
-   "qcom/x1p42100/adsp_dtbs.elf";
-
  status = "okay";
 };
 
 &remoteproc_cdsp {
- firmware-name = "qcom/x1p42100/qccdsp8380.mbn",
-   "qcom/x1p42100/cdsp_dtbs.elf";
-
  status = "okay";
 };
 
@@ -11746,6 +11740,6 @@
 
  zap-shader {
   memory-region = <&gpu_microcode_mem>;
-  firmware-name = "qcom/x1p42100/qcdxkmsucpurwa.mbn";
+  firmware-name = "qcom/x1e80100/gen70500_zap.mbn";
  };
 };
