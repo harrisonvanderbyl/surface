@@ -11,7 +11,7 @@ then
     echo "Error: dtc command failed, no output file created."
     exit 1
 fi
-sudo cp ./build/x1e80100-microsoft-denali.dtb /boot/dtbs/6.16.0-rc5-jg-1-qcom-x1e/qcom/x1p42100-lenovo-ideapad-5-2in1.dtb
+sudo cp ./build/x1e80100-microsoft-denali.dtb /boot/dtbs/6.16.0-rc6/qcom/x1p42100-lenovo-ideapad-5-2in1.dtb
 sudo rm /var/log/journal/fa46730e33564e71aa0bc4196801cd6f/*
 # rm ./build/surface.dts
 # flush usb drive

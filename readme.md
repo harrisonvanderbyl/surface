@@ -6,11 +6,11 @@ Current status:
 |:---------------:|:----:|
 |Keyboard |   ✓    |
 |Touchpad | ✓    | 
-|Tablet Mode      | ❌    |
-|Touchscreen      | ❌   |
+|Lid     | ✓ (is registered as input, does not do anything yet)    |
+|Touchscreen      | ✓   |
 |Backlight      | ✓   |
 |GPU      |  ❌  |
-|Pen              | ❌   |
+|Pen              | ✓   |
 |WiFi             | ✓ (run fixwifi.sh and reboot)   |
 |Bluetooth        | ✓   | 
 |Speakers         | ❌  | 

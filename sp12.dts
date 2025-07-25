@@ -613,6 +613,40 @@
 
 
 };
+&i2c4 {
+	
+	
+	status = "okay";
+	assigned-clock-rates = <19200000>;
+
+	
+};
+&i2c8 {
+	clock-frequency = <400000>;
+
+	status = "okay";
+
+	/* ILIT2911 or GTCH1563 */
+	touchscreen@16 {
+		compatible = "hid-over-i2c";
+		reg = <0x16>;
+
+		hid-descr-addr = <0x1>;
+		interrupts-extended = <&tlmm 51 IRQ_TYPE_LEVEL_LOW>;
+
+		pinctrl-0 = <&ts0_default>;
+		pinctrl-names = "default";
+	};
+};
+&i2c9 {
+	
+	
+	status = "okay";
+	assigned-clock-rates = <19200000>;
+
+	
+};
+
 
 &pcie4 {
 	status = "okay";
@@ -644,14 +678,6 @@
 	};
 };
 
-&i2c4 {
-	
-	
-	status = "okay";
-	assigned-clock-rates = <19200000>;
-
-	
-};
 
 
 &qupv3_0 {
@@ -797,6 +823,21 @@
 		bias-disable;
 	};
 
+	ts0_default: ts0-default-state {
+		int-n-pins {
+			pins = "gpio51";
+			function = "gpio";
+			bias-disable;
+		};
+
+		reset-n-pins {
+			pins = "gpio52";
+			function = "gpio";
+			output-high;
+			drive-strength = <16>;
+		};
+	};
+	
 
 	wcn_sw_en: wcn-sw-en-state {
 			pins = "gpio214";
@@ -903,14 +944,6 @@
 
 };
 
-&remoteproc_adsp {
-	status = "okay";
-};
-
-&remoteproc_cdsp {
-	status = "okay";
-};
-
 
 &gpu {
 	status = "okay";
@@ -919,4 +952,18 @@
 		memory-region = <&gpu_microcode_mem>;
 		firmware-name = "qcom/x1e80100/gen70500_zap.mbn";
 	};
+};
+
+&remoteproc_adsp {
+	firmware-name = "qcom/x1p42100/qcadsp8380.mbn",
+			"qcom/x1p42100/adsp_dtbs.elf";
+
+	status = "okay";
+};
+
+&remoteproc_cdsp {
+	firmware-name = "qcom/x1p42100/qccdsp8380.mbn",
+			"qcom/x1p42100/cdsp_dtbs.elf";
+
+	status = "okay";
 };
