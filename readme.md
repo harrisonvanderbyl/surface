@@ -9,7 +9,7 @@ Current status:
 |Lid     | ✓ (is registered as input, does not do anything yet)    |
 |Touchscreen      | ✓   |
 |Backlight      | ✓   |
-|GPU      |  ❌  |
+|GPU      |  ✓ (mesa 25.3.0)  | 
 |Pen              | ✓   |
 |WiFi             | ✓ (run fixwifi.sh and reboot)   |
 |Bluetooth        | ✓   | 

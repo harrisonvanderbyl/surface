@@ -1,0 +1,1 @@
+sc7180-el2.o: arch/arm64/boot/dts/qcom/sc7180-el2.dtso
