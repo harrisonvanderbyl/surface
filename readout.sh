@@ -16,13 +16,4 @@ fi
 > "$OUTPUT_FILE"    
 # contents are journal logs
 # Read the log files and output to log.txt
-for file in "$LOG_DIR"/*; do
-    if [ -f "$file" ]; then
-        echo "Reading log file: $file" >> "$OUTPUT_FILE"
-        # Use journalctl to read the log file
-        journalctl --file="$file" >> "$OUTPUT_FILE"
-        echo -e "\n" >> "$OUTPUT_FILE"
-    else
-        echo "Skipping non-file: $file" >> "$OUTPUT_FILE"
-    fi
-done
+journalctl --dir="$LOG_DIR" >> "$OUTPUT_FILE"
