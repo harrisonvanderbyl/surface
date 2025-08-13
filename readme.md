@@ -17,7 +17,7 @@ Current status:
 |Buttons          | ❌ (power button only)    |
 |Suspend          | ✓    |
 |Hibernate        | ?   | 
-|Sensors          | ❌    |
+|UFS (local drive)| ✓ |
 |Battery Status   | ✓   | 
 |Performance Modes| ❌   | 
 |Cameras          | ❌   | 

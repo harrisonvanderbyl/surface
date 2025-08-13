@@ -32,6 +32,31 @@
 		serial1 = &uart14;
 	};
 
+	wcd938x: audio-codec {
+		compatible = "qcom,wcd9385-codec";
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&wcd_default>;
+
+		qcom,micbias1-microvolt = <1800000>;
+		qcom,micbias2-microvolt = <1800000>;
+		qcom,micbias3-microvolt = <1800000>;
+		qcom,micbias4-microvolt = <1800000>;
+		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
+		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
+		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
+		qcom,rx-device = <&wcd_rx>;
+		qcom,tx-device = <&wcd_tx>;
+
+		reset-gpios = <&tlmm 191 GPIO_ACTIVE_LOW>;
+
+		vdd-buck-supply = <&vreg_l15b_1p8>;
+		vdd-rxtx-supply = <&vreg_l15b_1p8>;
+		vdd-io-supply = <&vreg_l15b_1p8>;
+		vdd-mic-bias-supply = <&vreg_bob1>;
+
+		#sound-dai-cells = <1>;
+	};
 
 
 
@@ -58,12 +83,13 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 
+		/* Left-side rear port */
 		connector@0 {
 			compatible = "usb-c-connector";
 			reg = <0>;
 			power-role = "dual";
-			data-role = "host";
-			
+			data-role = "dual";
+
 			ports {
 				#address-cells = <1>;
 				#size-cells = <0>;
@@ -83,17 +109,16 @@
 						remote-endpoint = <&usb_1_ss0_qmpphy_out>;
 					};
 				};
-			
 			};
 		};
 
-		/* User-adjacent port */
+		/* Left-side front port */
 		connector@1 {
 			compatible = "usb-c-connector";
 			reg = <1>;
 			power-role = "dual";
-			data-role = "host";
-			
+			data-role = "dual";
+
 			ports {
 				#address-cells = <1>;
 				#size-cells = <0>;
@@ -113,10 +138,11 @@
 						remote-endpoint = <&usb_1_ss1_qmpphy_out>;
 					};
 				};
-
 			};
 		};
 	};
+
+	
 
 	reserved-memory {
 		linux,cma {
@@ -124,6 +150,94 @@
 			size = <0x0 0x8000000>;
 			reusable;
 			linux,cma-default;
+		};
+	};
+
+	sound {
+		compatible = "qcom,x1e80100-sndcard";
+		model = "X1E80100-CRD";
+		audio-routing = "WooferLeft IN", "WSA WSA_SPK1 OUT",
+				"TweeterLeft IN", "WSA WSA_SPK2 OUT",
+				"WooferRight IN", "WSA2 WSA_SPK2 OUT",
+				"TweeterRight IN", "WSA2 WSA_SPK2 OUT",
+				"IN1_HPHL", "HPHL_OUT",
+				"IN2_HPHR", "HPHR_OUT",
+				"AMIC2", "MIC BIAS2",
+				"VA DMIC0", "MIC BIAS3",
+				"VA DMIC1", "MIC BIAS3",
+				"VA DMIC2", "MIC BIAS1",
+				"VA DMIC3", "MIC BIAS1",
+				"VA DMIC0", "VA MIC BIAS3",
+				"VA DMIC1", "VA MIC BIAS3",
+				"VA DMIC2", "VA MIC BIAS1",
+				"VA DMIC3", "VA MIC BIAS1",
+				"TX SWR_INPUT1", "ADC2_OUTPUT";
+
+		wcd-playback-dai-link {
+			link-name = "WCD Playback";
+
+			cpu {
+				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
+			};
+
+			codec {
+				sound-dai = <&wcd938x 0>, <&swr1 0>, <&lpass_rxmacro 0>;
+			};
+
+			platform {
+				sound-dai = <&q6apm>;
+			};
+		};
+
+		wcd-capture-dai-link {
+			link-name = "WCD Capture";
+
+			cpu {
+				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
+			};
+
+			codec {
+				sound-dai = <&wcd938x 1>, <&swr2 1>, <&lpass_txmacro 0>;
+			};
+
+			platform {
+				sound-dai = <&q6apm>;
+			};
+		};
+
+		wsa-dai-link {
+			link-name = "WSA Playback";
+
+			cpu {
+				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
+			};
+
+			codec {
+				sound-dai = <&left_woofer>, <&left_tweeter>,
+					    <&swr0 0>, <&lpass_wsamacro 0>,
+					    <&right_woofer>, <&right_tweeter>,
+					    <&swr3 0>, <&lpass_wsa2macro 0>;
+			};
+
+			platform {
+				sound-dai = <&q6apm>;
+			};
+		};
+
+		va-dai-link {
+			link-name = "VA Capture";
+
+			cpu {
+				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
+			};
+
+			codec {
+				sound-dai = <&lpass_vamacro 0>;
+			};
+
+			platform {
+				sound-dai = <&q6apm>;
+			};
 		};
 	};
 
@@ -342,6 +456,7 @@
 			regulator-min-microvolt = <1200000>;
 			regulator-max-microvolt = <1200000>;
 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+			regulator-always-on;
 		};
 
 		vreg_l13b_3p0: ldo13 {
@@ -363,6 +478,7 @@
 			regulator-min-microvolt = <1800000>;
 			regulator-max-microvolt = <1800000>;
 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+			regulator-always-on;
 		};
 
 		vreg_l16b_2p9: ldo16 {
@@ -542,9 +658,9 @@
 
 		vreg_l2i_1p2: ldo2 {
 			regulator-name = "vreg_l2i_1p2";
-			regulator-min-microvolt = <1128000>;
-			regulator-max-microvolt = <1272000>;
-			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+			regulator-min-microvolt = <1200000>;
+			regulator-max-microvolt = <1200000>;
+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 		};
 
 		vreg_l3i_0p8: ldo3 {
@@ -580,8 +696,8 @@
 
 		vreg_l2j_1p2: ldo2 {
 			regulator-name = "vreg_l2j_1p2";
-			regulator-min-microvolt = <1200000>;
-			regulator-max-microvolt = <1200000>;
+			regulator-min-microvolt = <1256000>;
+			regulator-max-microvolt = <1256000>;
 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 		};
 
@@ -593,10 +709,6 @@
 		};
 	};
 };
-
-
-
-
 
 
 
@@ -625,6 +737,115 @@
 	};
 };
 
+&lpass_tlmm {
+	spkr_01_sd_n_active: spkr-01-sd-n-active-state {
+		pins = "gpio12";
+		function = "gpio";
+		drive-strength = <16>;
+		bias-disable;
+		output-low;
+	};
+
+	spkr_23_sd_n_active: spkr-23-sd-n-active-state {
+		pins = "gpio13";
+		function = "gpio";
+		drive-strength = <16>;
+		bias-disable;
+		output-low;
+	};
+};
+
+&lpass_vamacro {
+	pinctrl-0 = <&dmic01_default>, <&dmic23_default>;
+	pinctrl-names = "default";
+
+	vdd-micb-supply = <&vreg_l1b_1p8>;
+	qcom,dmic-sample-rate = <4800000>;
+};
+
+&swr0 {
+	status = "okay";
+
+	pinctrl-0 = <&wsa_swr_active>, <&spkr_01_sd_n_active>;
+	pinctrl-names = "default";
+
+	/* WSA8845, Left Woofer */
+	left_woofer: speaker@0,0 {
+		compatible = "sdw20217020400";
+		reg = <0 0>;
+		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
+		#sound-dai-cells = <0>;
+		sound-name-prefix = "WooferLeft";
+		vdd-1p8-supply = <&vreg_l15b_1p8>;
+		vdd-io-supply = <&vreg_l12b_1p2>;
+		qcom,port-mapping = <1 2 3 7 10 13>;
+	};
+
+	/* WSA8845, Left Tweeter */
+	left_tweeter: speaker@0,1 {
+		compatible = "sdw20217020400";
+		reg = <0 1>;
+		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
+		#sound-dai-cells = <0>;
+		sound-name-prefix = "TweeterLeft";
+		vdd-1p8-supply = <&vreg_l15b_1p8>;
+		vdd-io-supply = <&vreg_l12b_1p2>;
+		qcom,port-mapping = <4 5 6 7 11 13>;
+	};
+};
+
+&swr1 {
+	status = "okay";
+
+	/* WCD9385 RX */
+	wcd_rx: codec@0,4 {
+		compatible = "sdw20217010d00";
+		reg = <0 4>;
+		qcom,rx-port-mapping = <1 2 3 4 5>;
+	};
+};
+
+&swr2 {
+	status = "okay";
+
+	/* WCD9385 TX */
+	wcd_tx: codec@0,3 {
+		compatible = "sdw20217010d00";
+		reg = <0 3>;
+		qcom,tx-port-mapping = <2 2 3 4>;
+	};
+};
+
+&swr3 {
+	status = "okay";
+
+	pinctrl-0 = <&wsa2_swr_active>, <&spkr_23_sd_n_active>;
+	pinctrl-names = "default";
+
+	/* WSA8845, Right Woofer */
+	right_woofer: speaker@0,0 {
+		compatible = "sdw20217020400";
+		reg = <0 0>;
+		reset-gpios = <&lpass_tlmm 13 GPIO_ACTIVE_LOW>;
+		#sound-dai-cells = <0>;
+		sound-name-prefix = "WooferRight";
+		vdd-1p8-supply = <&vreg_l15b_1p8>;
+		vdd-io-supply = <&vreg_l12b_1p2>;
+		qcom,port-mapping = <1 2 3 7 10 13>;
+	};
+
+	/* WSA8845, Right Tweeter */
+	right_tweeter: speaker@0,1 {
+		compatible = "sdw20217020400";
+		reg = <0 1>;
+		reset-gpios = <&lpass_tlmm 13 GPIO_ACTIVE_LOW>;
+		#sound-dai-cells = <0>;
+		sound-name-prefix = "TweeterRight";
+		vdd-1p8-supply = <&vreg_l15b_1p8>;
+		vdd-io-supply = <&vreg_l12b_1p2>;
+		qcom,port-mapping = <4 5 6 7 11 13>;
+	};
+};
 
 
 &pcie4 {
@@ -698,9 +919,8 @@
 
 
 &tlmm {
-	gpio-reserved-ranges = <44 4>,
-		<238 1>; /* UFS Reset */
-
+	gpio-reserved-ranges = <34 2>, /* Unused */
+			       <44 4>; /* SPI (TPM) */
 
 
 	hall_int_n_default: hall-int-n-state {
@@ -754,6 +974,14 @@
 			output-high;
 			drive-strength = <16>;
 		};
+	};
+
+	wcd_default: wcd-reset-n-active-state {
+		pins = "gpio191";
+		function = "gpio";
+		drive-strength = <16>;
+		bias-disable;
+		output-low;
 	};
 
 
@@ -994,28 +1222,11 @@
 
 
 &soc {
-		ufs_mem_phy: phy@1d80000 {
-			compatible = "qcom,x1e80100-qmp-ufs-phy";
-			reg = <0 0x01d80000 0 0x2000>;
-			clocks = <&rpmhcc RPMH_CXO_CLK>,
-				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
-				 <&tcsr TCSR_UFS_PHY_CLKREF_EN>;
-			clock-names = "ref",
-				      "ref_aux",
-				      "qref";
-
-			dma-coherent;
-			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
-			resets = <&ufs_mem_hc 0>;
-			reset-names = "ufsphy";
-			#phy-cells = <0>;
-			status = "disabled";
-
-		};
-
+		
 		ufs_mem_hc: ufs@1d84000 {
-			compatible = "qcom,x1e80100-ufshc", "qcom,ufshc",
-				     "jedec,ufs-2.0";
+			/* Use sm8550 as fallback, it's quirks at least are needed */
+			compatible = "qcom,x1e80100-ufshc", "qcom,sm8550-ufshc",
+				     "qcom,ufshc", "jedec,ufs-2.0";
 			reg = <0 0x01d84000 0 0x3000>;
 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
 			phys = <&ufs_mem_phy>;
@@ -1024,7 +1235,6 @@
 			#reset-cells = <1>;
 			resets = <&gcc GCC_UFS_PHY_BCR>;
 			reset-names = "rst";
-			dma-coherent;
 
 			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
 
@@ -1046,11 +1256,11 @@
 				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
 				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
 				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
-			freq-table-hz = <300000000 300000000>,
+			freq-table-hz = <100000000 403000000>,
 					<0 0>,
 					<0 0>,
-					<300000000 300000000>,
-					<0 0>,
+					<100000000 403000000>,
+					<100000000 403000000>,
 					<0 0>,
 					<0 0>,
 					<0 0>;
@@ -1061,50 +1271,75 @@
 					 &config_noc SLAVE_UFS_MEM_CFG QCOM_ICC_TAG_ALWAYS>;
 			interconnect-names = "ufs-ddr", "cpu-ufs";
 
-			qcom,ice-supported;
+			qcom,ice = <&ice>;
 
 			status = "disabled";
 		};
 
+		ufs_mem_phy: phy@1d80000 {
+			/* Just like the ufshc use the sm8550 as fallback for now */
+			compatible = "qcom,x1e80100-qmp-ufs-phy", "qcom,sm8550-qmp-ufs-phy";
+			reg = <0 0x01d80000 0 0x2000>;
+			clocks = <&rpmhcc RPMH_CXO_CLK>,
+				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
+			clock-names = "ref",
+				      "ref_aux",
+				      "qref";
+			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
+			resets = <&ufs_mem_hc 0>;
+			reset-names = "ufsphy";
+			#phy-cells = <0>;
+			status = "disabled";
+		};
+
+		ice: crypto@1d90000 {
+			compatible = "qcom,x1e80100-inline-crypto-engine",
+				     "qcom,inline-crypto-engine";
+			reg = <0 0x1d88000 0 0x8000>;
+			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+		};
 		
 
 };
 
+
 &ufs_mem_hc {
 	status = "okay";
 
-	reset-gpios = <&tlmm 210 GPIO_ACTIVE_LOW>;
+	reset-gpios = <&tlmm 238 GPIO_ACTIVE_LOW>;
 	vcc-supply = <&vreg_l17b_2p5>;
-	vcc-max-microamp = <1300000>;
-	vccq-supply = <&vreg_l2i_1p2>;
-	vccq-max-microamp = <1200000>;
-	vdd-hba-supply = <&vreg_l3j_0p8>;
+	vcc-max-microamp = <600000>;
 
+	vccq-supply = <&vreg_l2i_1p2>;
+	vccq-max-microamp = <600000>;
 };
 
 &ufs_mem_phy {
 	status = "okay";
 
-	vdda-phy-supply = <&vreg_l3e_1p2>;
-	vdda-pll-supply = <&vreg_l3i_0p8>;
+	//vdda-phy-supply = <&vreg_l2c_0p8>;
+	vdda-phy-supply = <&vreg_l3i_0p8>;
+	//vdda-pll-supply = <&vreg_l12b_1p2>;
+	vdda-pll-supply = <&vreg_l3e_1p2>;
 };
+		
+
 // sgb4 3j,17b,2i,3e,3i, 9b,6b,12b,9b,6b,12b,6b,
 /*
 &gcc {
-			#clock-cells = <1>;
+	#clock-cells = <1>;
 	clocks = <&bi_tcxo_div2>,
 				 <&sleep_clk>,
 				 <&pcie3_phy>,
 				 <&pcie4_phy>,
-				 <&pcie5_phy>,
-				 <&pcie6a_phy>,
-				 <&ufs_mem_phy>,
-				 <&ufs_mem_hc>,
+				 <&ufs_mem_phy 0>,
+				 <&ufs_mem_phy 1>,
+				 <&ufs_mem_phy 2>,
 				 <&usb_1_ss0_qmpphy QMP_USB43DP_USB3_PIPE_CLK>,
 				 <&usb_1_ss1_qmpphy QMP_USB43DP_USB3_PIPE_CLK>,
 				 <&usb_1_ss2_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
-};*/
-/*
+};
+
 &aggre1_noc {
 
 			clocks = <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>;
